@@ -1,0 +1,3 @@
+[submodule "finance-api"]
+	path = finance-api
+	url = https://github.com/zydtiger/finance-api.git
