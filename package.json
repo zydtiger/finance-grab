@@ -1,5 +1,6 @@
 {
   "name": "finance-grab",
+  "description": "Finance data downloader powered by the finance-api repository as its backend.",
   "private": true,
   "version": "0.1.0",
   "type": "module",
