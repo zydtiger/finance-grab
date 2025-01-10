@@ -3,7 +3,8 @@
  * @author tigerding <zhiyuanding01@gmail.com>
  */
 
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useContext, useImperativeHandle, useRef } from "react";
+import { globalThemeContext } from "@/theme";
 import { capitalize } from "@/utils/string";
 import Flex from "../Flex/Flex";
 import { FormHandle, FormFieldDef, FieldHandle, FieldType } from "./types";
@@ -22,19 +23,15 @@ const isEmptyValue = (value: unknown): boolean => {
   );
 };
 
-const validateRequiredField = (
-  field: FormFieldDef,
-  value: unknown
-): boolean => {
+const validateRequiredField = (field: FormFieldDef, value: unknown): boolean => {
   if (isRequired(field) && isEmptyValue(value)) return false;
   return true;
 };
 
-const createForm = <T extends object>(
-  scheme: FormFieldDef[],
-  defaultValue?: T
-) => {
+const createForm = <T extends object>(scheme: FormFieldDef[], defaultValue?: T) => {
   return React.forwardRef<FormHandle<T>>((_props, ref) => {
+    const theme = useContext(globalThemeContext);
+
     const inputRefsMap = useRef(new Map<string, FieldHandle>());
     const setInputRef = (name: string) => (element: FieldHandle | null) => {
       if (element) {
@@ -62,9 +59,9 @@ const createForm = <T extends object>(
 
     return (
       <Flex gap={10}>
-        {scheme.map((field) => (
+        {scheme.map(field => (
           <Flex key={field.name} align="center" style={{ width: "100%" }}>
-            <p style={{ fontSize: 14, width: 80 }}>
+            <p style={{ fontSize: 14, width: 80, color: theme.colorText }}>
               {/* format camel case names */}
               {capitalize(field.name.replace(/([A-Z])/g, " $1"))}
               {isRequired(field) && <span style={{ color: "red" }}>*</span>}
@@ -73,9 +70,7 @@ const createForm = <T extends object>(
               <FormField
                 ref={setInputRef(field.name)}
                 field={field}
-                defaultValue={
-                  defaultValue?.[field.name as keyof T] as FieldType
-                }
+                defaultValue={defaultValue?.[field.name as keyof T] as FieldType}
               />
             </Flex>
           </Flex>
