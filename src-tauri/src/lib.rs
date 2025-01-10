@@ -5,6 +5,8 @@ use std::io::{BufRead, BufReader};
 use std::process::{Command, Stdio};
 use std::sync::Mutex;
 
+use tauri::Manager;
+
 static PORT: Mutex<Option<String>> = Mutex::new(None);
 
 #[tauri::command]
@@ -46,9 +48,18 @@ pub fn run() {
         eprintln!("Failed to start Python server: {}", e);
     }
 
-    tauri::Builder::default()
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_server_port])
+        .invoke_handler(tauri::generate_handler![get_server_port]);
+
+    // Enable DevTools in development mode
+    #[cfg(debug_assertions)]
+    let builder = builder.setup(|app| {
+        app.get_webview_window("main").unwrap().open_devtools();
+        Ok(())
+    });
+
+    builder
         .run(tauri::generate_context!())
         .expect("Error while running Tauri application");
 }
