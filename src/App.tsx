@@ -1,49 +1,50 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+/**
+ * App root component.
+ * @author tigerding <zhiyuanding01@gmail.com>
+ */
+
+import { useContext, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { globalThemeContext } from "./theme";
+import Downloader from "./components/Downloader";
 import "./App.css";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const theme = useContext(globalThemeContext);
+  const [serverPort, setServerPort] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+  useEffect(() => {
+    // get server port on component mount
+    const initializeServer = async () => {
+      try {
+        const port = await invoke("get_server_port");
+        setServerPort(port as string);
+      } catch (err) {
+        setError(err as string);
+      }
+    };
+
+    initializeServer();
+  }, []);
+
+  if (error) {
+    return <div>Error connecting to server: {error}</div>;
   }
 
+  if (!serverPort) {
+    return <div>Connecting to server...</div>;
+  }
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
+    <main
+      style={{
+        padding: 20,
+        background: theme.colorBg,
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <Downloader />
     </main>
   );
 }
