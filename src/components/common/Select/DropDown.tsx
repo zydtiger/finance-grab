@@ -9,9 +9,10 @@ import { getMode, globalThemeContext } from "@/theme";
 import { hexToHSL } from "@/utils/color";
 import { DropDownProps } from "./types";
 import Scroll from "../Scroll/Scroll";
+import Expand from "../Animations/Expand";
 
 const DropDown = React.forwardRef<HTMLDivElement, DropDownProps>(
-  ({ position, width, options, value, onChange }, ref) => {
+  ({ isShow, position, width, options, value, onChange }, ref) => {
     const theme = useContext(globalThemeContext);
     const primaryColor = useMemo(
       () =>
@@ -53,30 +54,32 @@ const DropDown = React.forwardRef<HTMLDivElement, DropDownProps>(
 
     return (
       <div ref={ref}>
-        <Scroll scrollMaxHeight={200} style={dropDownStyles}>
-          {options.map((option, index) => (
-            <div
-              key={index}
-              onClick={() => onChange?.(option.value)}
-              onMouseEnter={() => setAccentIndices((prev) => [...prev, index])}
-              onMouseLeave={() =>
-                setAccentIndices((prev) => prev.splice(prev.indexOf(index)))
-              }
-              style={{
-                borderRadius: theme.borderRadius,
-                padding: 5,
-                backgroundColor:
-                  option.value === value
-                    ? primaryColor
-                    : accentIndices.includes(index)
-                    ? accentColor
-                    : "transparent",
-              }}
-            >
-              {option.label}
-            </div>
-          ))}
-        </Scroll>
+        <Expand isShow={isShow} style={dropDownStyles}>
+          <Scroll scrollMaxHeight={200}>
+            {options.map((option, index) => (
+              <div
+                key={index}
+                onClick={() => onChange?.(option.value)}
+                onMouseEnter={() => setAccentIndices(prev => [...prev, index])}
+                onMouseLeave={() =>
+                  setAccentIndices(prev => prev.filter(i => i !== index))
+                }
+                style={{
+                  borderRadius: theme.borderRadius,
+                  padding: 5,
+                  backgroundColor:
+                    option.value === value
+                      ? primaryColor
+                      : accentIndices.includes(index)
+                      ? accentColor
+                      : "transparent",
+                }}
+              >
+                {option.label}
+              </div>
+            ))}
+          </Scroll>
+        </Expand>
       </div>
     );
   }

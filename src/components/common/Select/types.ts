@@ -13,6 +13,7 @@ export interface SelectProps {
 }
 
 export interface DropDownProps {
+  isShow: boolean;
   position: Position;
   width: number;
   options: Option[];

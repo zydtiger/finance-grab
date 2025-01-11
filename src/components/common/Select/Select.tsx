@@ -45,8 +45,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
       const notInSelect =
         selectRef.current && !selectRef.current.contains(event.target as Node);
       const notInDropDown =
-        dropDownRef.current &&
-        !dropDownRef.current.contains(event.target as Node);
+        dropDownRef.current && !dropDownRef.current.contains(event.target as Node);
 
       if (notInSelect && notInDropDown) {
         setIsActive(false);
@@ -85,7 +84,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
   }, [selectRef]);
 
   const optionsMemo = useMemo(() => {
-    const optionsProcessed = options.map((option) => {
+    const optionsProcessed = options.map(option => {
       if (typeof option === "string") {
         return {
           value: option,
@@ -94,7 +93,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
       } else return option;
     });
 
-    const values = optionsProcessed.map((option) => option.value);
+    const values = optionsProcessed.map(option => option.value);
     assert(
       new Set(values).size === values.length,
       "Select options must have unique values"
@@ -127,7 +126,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
       <div
         ref={selectRef}
         style={selectStyles}
-        onClick={() => setIsActive((prev) => !prev)}
+        onClick={() => setIsActive(prev => !prev)}
       >
         {children}
       </div>
@@ -136,7 +135,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
 
   const SelectInner = () => (
     <Flex justify="space-between" align="center" style={{ width: "100%" }}>
-      {optionsMemo.find((option) => option.value === selected)?.label ?? ( // if no value selected, show placeholder
+      {optionsMemo.find(option => option.value === selected)?.label ?? ( // if no value selected, show placeholder
         <span style={{ color: theme.colorTextSecondary }}>{placeholder}</span>
       )}
       <DownOutlined />
@@ -146,21 +145,21 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
   return (
     <SelectParent>
       <SelectInner />
-      {isActive &&
-        ReactDOM.createPortal(
-          <DropDown
-            ref={dropDownRef}
-            position={calcDropDownPosition()}
-            width={calcDropDownWidth()}
-            options={optionsMemo}
-            value={selected}
-            onChange={(val) => {
-              setSelected(val);
-              onChange?.(val);
-            }}
-          />,
-          document.body
-        )}
+      {ReactDOM.createPortal(
+        <DropDown
+          isShow={isActive}
+          ref={dropDownRef}
+          position={calcDropDownPosition()}
+          width={calcDropDownWidth()}
+          options={optionsMemo}
+          value={selected}
+          onChange={val => {
+            setSelected(val);
+            onChange?.(val);
+          }}
+        />,
+        document.body
+      )}
     </SelectParent>
   );
 };
