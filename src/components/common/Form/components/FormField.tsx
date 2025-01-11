@@ -60,7 +60,7 @@ const FormField = React.forwardRef<FieldHandle, FormFieldProps>(
           onChange={setValue}
         />
       );
-  }
+  },
 );
 
 export default FormField;

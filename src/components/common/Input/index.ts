@@ -9,7 +9,7 @@ import { SizeType } from "./types";
 export function inputStyles(
   theme: Theme,
   size: SizeType = "default",
-  active = false
+  active = false,
 ): React.CSSProperties {
   return {
     outline: "none",

@@ -3,8 +3,7 @@
  * @author tigerding <zhiyuanding01@gmail.com>
  */
 
-export interface ButtonProps
-  extends Omit<React.HTMLProps<HTMLDivElement>, "size"> {
+export interface ButtonProps extends Omit<React.HTMLProps<HTMLDivElement>, "size"> {
   type?: "default" | "primary" | "link";
   size?: "small" | "default" | "large";
   color?: string;

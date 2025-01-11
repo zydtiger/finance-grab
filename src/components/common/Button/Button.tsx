@@ -19,13 +19,11 @@ const Button: React.FC<PropsWithChildren<ButtonProps>> = React.forwardRef(
 
       ...props // html div props
     },
-    ref
+    ref,
   ) => {
     const theme = useContext(globalThemeContext);
     const [isHovered, setIsHovered] = useState(false);
-    const primaryColor = muted
-      ? theme.colorTextSecondary
-      : theme.colorsHighlight[0];
+    const primaryColor = muted ? theme.colorTextSecondary : theme.colorsHighlight[0];
 
     const colors = {
       primary: {
@@ -97,11 +95,11 @@ const Button: React.FC<PropsWithChildren<ButtonProps>> = React.forwardRef(
           ...containerStyles,
           ...props.style,
         }}
-        onMouseEnter={(e) => {
+        onMouseEnter={e => {
           setIsHovered(true);
           props.onMouseEnter?.(e);
         }}
-        onMouseLeave={(e) => {
+        onMouseLeave={e => {
           setIsHovered(false);
           props.onMouseLeave?.(e);
         }}
@@ -109,7 +107,7 @@ const Button: React.FC<PropsWithChildren<ButtonProps>> = React.forwardRef(
         {children}
       </div>
     );
-  }
+  },
 );
 
 export default Button;

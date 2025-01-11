@@ -16,12 +16,7 @@ interface ListItemProps {
   onDelete: () => void;
 }
 
-const ListItem: React.FC<ListItemProps> = ({
-  type,
-  value,
-  onChange,
-  onDelete,
-}) => {
+const ListItem: React.FC<ListItemProps> = ({ type, value, onChange, onDelete }) => {
   return (
     <Flex align="center" style={{ width: "100%" }}>
       <BasicField type={type} value={value} onChange={onChange} />

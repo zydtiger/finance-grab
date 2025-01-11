@@ -25,14 +25,12 @@ const FieldList: React.FC<FieldListProps> = ({ type, values, onChange }) => {
           key={index}
           type={type}
           value={item}
-          onChange={(data) => {
+          onChange={data => {
             const valuesClone = [...valuesNormalized];
             valuesClone[index] = data;
             onChange(valuesClone);
           }}
-          onDelete={() =>
-            onChange(valuesNormalized.filter((_, i) => i !== index))
-          }
+          onDelete={() => onChange(valuesNormalized.filter((_, i) => i !== index))}
         />
       ))}
       <Button

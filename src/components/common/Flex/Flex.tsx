@@ -22,7 +22,7 @@ const Flex: React.ForwardRefExoticComponent<PropsWithChildren<FlexProps>> =
         style,
         ...props // html div props
       },
-      ref
+      ref,
     ) => {
       return (
         <div
@@ -41,7 +41,7 @@ const Flex: React.ForwardRefExoticComponent<PropsWithChildren<FlexProps>> =
           {children}
         </div>
       );
-    }
+    },
   );
 
 export default Flex;

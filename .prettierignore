@@ -1,1 +1,4 @@
 pnpm-lock.yaml
+finance-api/
+src-tauri/target/
+src-tauri/Cargo.lock

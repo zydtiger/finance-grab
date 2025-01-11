@@ -27,7 +27,7 @@ export const DownloaderEndpoints: Record<
       form["start date"],
       form["end date"],
       form["period"],
-      "plain"
+      "plain",
     ),
   intraday: form => getTodayEndpoint(form["ticker"], "plain"),
   income: form => getIncomeEndpoint(form["ticker"], form["type"]),

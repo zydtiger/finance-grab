@@ -10,7 +10,7 @@ export const getHistoryEndpoint = (
   start?: string,
   end?: string,
   period?: string,
-  ret_type: ResponseType = "model"
+  ret_type: ResponseType = "model",
 ) => {
   const targetURL = new URL(`/api/history/${ticker}`, window.location.origin);
   if (start) targetURL.searchParams.append("start", start);
@@ -23,7 +23,7 @@ export const getHistoryEndpoint = (
 
 export const getTodayEndpoint = (
   ticker: string,
-  ret_type: ResponseType = "model"
+  ret_type: ResponseType = "model",
 ) => {
   const targetURL = new URL(`/api/intraday/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", ret_type);
@@ -36,10 +36,7 @@ export const getIncomeEndpoint = (ticker: string, type: string = "yearly") => {
   return targetURL;
 };
 
-export const getCashflowEndpoint = (
-  ticker: string,
-  type: string = "yearly"
-) => {
+export const getCashflowEndpoint = (ticker: string, type: string = "yearly") => {
   const targetURL = new URL(`/api/cashflow/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", type);
   return targetURL;
@@ -51,10 +48,7 @@ export const getBalanceEndpoint = (ticker: string, type: string = "yearly") => {
   return targetURL;
 };
 
-export const getSECEndpoint = (
-  ticker: string,
-  ret_type: ResponseType = "model"
-) => {
+export const getSECEndpoint = (ticker: string, ret_type: ResponseType = "model") => {
   const targetURL = new URL(`/api/sec/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", ret_type);
   return targetURL;
@@ -62,7 +56,7 @@ export const getSECEndpoint = (
 
 export const getNewsEndpoint = (
   ticker: string,
-  ret_type: ResponseType = "model"
+  ret_type: ResponseType = "model",
 ) => {
   const targetURL = new URL(`/api/news/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", ret_type);
@@ -71,7 +65,7 @@ export const getNewsEndpoint = (
 
 export const getMetainfoEndpoint = (
   ticker: string,
-  ret_type: ResponseType = "model"
+  ret_type: ResponseType = "model",
 ) => {
   const targetURL = new URL(`/api/metainfo/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", ret_type);
@@ -80,7 +74,7 @@ export const getMetainfoEndpoint = (
 
 export const getTagsEndpoint = (
   ticker: string,
-  ret_type: ResponseType = "model"
+  ret_type: ResponseType = "model",
 ) => {
   const targetURL = new URL(`/api/tags/${ticker}`, window.location.origin);
   targetURL.searchParams.append("type", ret_type);

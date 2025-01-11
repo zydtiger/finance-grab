@@ -48,7 +48,7 @@ const createForm = <T extends object>(scheme: FormFieldDef[], defaultValue?: T) 
           const value = inputRefsMap.current.get(field.name)?.getData();
           if (!validateRequiredField(field, value)) {
             throw new Error(
-              `Missing required field in form: ${capitalize(field.name)}`
+              `Missing required field in form: ${capitalize(field.name)}`,
             );
           }
           formData[field.name as keyof T] = value as T[keyof T];

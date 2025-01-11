@@ -96,7 +96,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
     const values = optionsProcessed.map(option => option.value);
     assert(
       new Set(values).size === values.length,
-      "Select options must have unique values"
+      "Select options must have unique values",
     );
 
     return optionsProcessed;
@@ -158,7 +158,7 @@ const Select: React.FC<PropsWithStyle<SelectProps>> = ({
             onChange?.(val);
           }}
         />,
-        document.body
+        document.body,
       )}
     </SelectParent>
   );

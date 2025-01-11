@@ -40,20 +40,20 @@ const SearchInput: React.FC<InputProps> = ({
               ? width - heights[size]
               : `calc(${width} - ${heights[size]}px)`,
         }}
-        onFocus={(e) => {
+        onFocus={e => {
           setActive(true);
           props.onFocus?.(e); // propagate upwards
         }}
-        onBlur={(e) => {
+        onBlur={e => {
           setActive(false);
           props.onBlur?.(e);
         }}
         value={value}
-        onChange={(e) => {
+        onChange={e => {
           setValue(e.target.value);
           props.onChange?.(e);
         }}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === "Enter") onTrigger?.(value);
           props.onKeyDown?.(e);
         }}

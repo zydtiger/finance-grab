@@ -19,14 +19,14 @@ const DropDown = React.forwardRef<HTMLDivElement, DropDownProps>(
         getMode() === "dark"
           ? hexToHSL(theme.colorsHighlight[0], 0.5)
           : hexToHSL(theme.colorsHighlight[0], 3),
-      [theme]
+      [theme],
     );
     const accentColor = useMemo(
       () =>
         getMode() === "dark"
           ? hexToHSL(theme.colorBg, 1.2)
           : hexToHSL(theme.colorBg, 0.9),
-      [theme]
+      [theme],
     );
 
     const [accentIndices, setAccentIndices] = useState<number[]>([]);
@@ -71,8 +71,8 @@ const DropDown = React.forwardRef<HTMLDivElement, DropDownProps>(
                     option.value === value
                       ? primaryColor
                       : accentIndices.includes(index)
-                      ? accentColor
-                      : "transparent",
+                        ? accentColor
+                        : "transparent",
                 }}
               >
                 {option.label}
@@ -82,7 +82,7 @@ const DropDown = React.forwardRef<HTMLDivElement, DropDownProps>(
         </Expand>
       </div>
     );
-  }
+  },
 );
 
 export default DropDown;

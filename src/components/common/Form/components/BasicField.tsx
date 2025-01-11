@@ -37,7 +37,7 @@ const BasicField: React.FC<BasicFieldProps> = ({
       <Input
         type={type}
         style={{ flex: 1 }}
-        onChange={(e) => {
+        onChange={e => {
           if (type === "number") onChange(Number(e.target.value));
           else onChange(e.target.value);
         }}

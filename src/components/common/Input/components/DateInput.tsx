@@ -8,12 +8,7 @@ import { globalThemeContext } from "@/theme";
 import { InputProps } from "../types";
 import { inputStyles } from "..";
 
-const DateInput: React.FC<InputProps> = ({
-  style,
-  size,
-  onTrigger,
-  ...props
-}) => {
+const DateInput: React.FC<InputProps> = ({ style, size, onTrigger, ...props }) => {
   const theme = useContext(globalThemeContext);
   const [active, setActive] = useState(false);
   const [value, setValue] = useState(props.value ?? "");
@@ -26,20 +21,20 @@ const DateInput: React.FC<InputProps> = ({
         ...inputStyles(theme, size, active),
         ...style,
       }}
-      onFocus={(e) => {
+      onFocus={e => {
         setActive(true);
         props.onFocus?.(e); // propagate upwards
       }}
-      onBlur={(e) => {
+      onBlur={e => {
         setActive(false);
         props.onBlur?.(e);
       }}
       value={value}
-      onChange={(e) => {
+      onChange={e => {
         setValue(e.target.value);
         props.onChange?.(e);
       }}
-      onKeyDown={(e) => {
+      onKeyDown={e => {
         if (e.key === "Enter") onTrigger?.(value);
         props.onKeyDown?.(e);
       }}
