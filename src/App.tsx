@@ -7,9 +7,10 @@ import { useContext, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { globalThemeContext } from "./theme";
 import Downloader from "./components/Downloader";
+import Flex from "./components/common/Flex/Flex";
 import "./App.css";
 
-function App() {
+const App = () => {
   const theme = useContext(globalThemeContext);
   const [serverPort, setServerPort] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -30,11 +31,37 @@ function App() {
   }, []);
 
   if (error) {
-    return <div>Error connecting to server: {error}</div>;
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        style={{
+          width: "100vw",
+          height: "100vh",
+          background: theme.colorBg,
+          color: theme.colorText,
+        }}
+      >
+        <h1>Error connecting to server: {error}</h1>
+      </Flex>
+    );
   }
 
   if (!serverPort) {
-    return <div>Connecting to server...</div>;
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        style={{
+          width: "100vw",
+          height: "100vh",
+          background: theme.colorBg,
+          color: theme.colorText,
+        }}
+      >
+        <h1>Connecting to server...</h1>
+      </Flex>
+    );
   }
 
   return (
@@ -49,6 +76,6 @@ function App() {
       <Downloader port={serverPort} />
     </main>
   );
-}
+};
 
 export default App;
