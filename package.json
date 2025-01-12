@@ -14,7 +14,10 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-dialog": "~2",
+    "@tauri-apps/plugin-fs": "~2",
+    "@tauri-apps/plugin-http": "~2",
+    "@tauri-apps/plugin-shell": "~2",
     "overlayscrollbars": "^2.10.1",
     "overlayscrollbars-react": "^0.5.6",
     "react": "^18.3.1",
