@@ -19,7 +19,7 @@ const App = () => {
     // Get server port on component mount
     const initializeServer = async () => {
       try {
-        const port = await invoke("get_server_port");
+        const port = await invoke("start_python_server");
         console.info("Server starting at:", +`${port}`);
         setServerPort(port as string);
       } catch (err) {
@@ -33,6 +33,8 @@ const App = () => {
   if (error) {
     return (
       <Flex
+        vertical
+        gap={10}
         justify="center"
         align="center"
         style={{
@@ -42,7 +44,8 @@ const App = () => {
           color: theme.colorText,
         }}
       >
-        <h1>Error connecting to server: {error}</h1>
+        <h1>Error connecting to server:</h1>
+        <code style={{ fontSize: 20 }}>{error}</code>
       </Flex>
     );
   }
