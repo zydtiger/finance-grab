@@ -15,10 +15,11 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // get server port on component mount
+    // Get server port on component mount
     const initializeServer = async () => {
       try {
         const port = await invoke("get_server_port");
+        console.info("Server starting at:", +`${port}`);
         setServerPort(port as string);
       } catch (err) {
         setError(err as string);
@@ -35,6 +36,7 @@ function App() {
   if (!serverPort) {
     return <div>Connecting to server...</div>;
   }
+
   return (
     <main
       style={{
@@ -44,7 +46,7 @@ function App() {
         height: "100vh",
       }}
     >
-      <Downloader />
+      <Downloader port={serverPort} />
     </main>
   );
 }
