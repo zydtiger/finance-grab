@@ -5,6 +5,7 @@ use std::io::{BufRead, BufReader};
 use std::process::{Command, Stdio};
 use std::sync::Mutex;
 
+#[cfg(debug_assertions)]
 use tauri::Manager;
 
 static PORT: Mutex<Option<String>> = Mutex::new(None);
