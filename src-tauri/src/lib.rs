@@ -6,7 +6,7 @@ use std::io::{BufRead, BufReader};
 use std::process::{Child, Command, Stdio};
 use std::sync::Arc;
 use tauri::path::BaseDirectory;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Listener, Manager};
 use tokio::sync::{Mutex, OnceCell};
 
 struct PythonServerState {
@@ -116,6 +116,28 @@ pub fn run() {
             // Enable DevTools in development mode
             #[cfg(debug_assertions)]
             app.get_webview_window("main").unwrap().open_devtools();
+
+            // Listen for the close-requested event and kill the Python server subprocess
+            app.get_webview_window("main").unwrap().listen(
+                "tauri://close-requested",
+                move |_event| {
+                    let runtime = tokio::runtime::Runtime::new().unwrap();
+                    runtime.block_on(async move {
+                        let server_state = get_python_server_state().await;
+                        let mut state = server_state.lock().await;
+                        if let Some(mut subprocess) = state.subprocess.take() {
+                            if let Err(e) = subprocess.kill() {
+                                tracing::error!("Failed to kill Python server subprocess: {}", e);
+                            } else {
+                                tracing::info!("Killed Python server subprocess");
+                            }
+                        } else {
+                            tracing::warn!("No Python server subprocess was running");
+                        }
+                    });
+                },
+            );
+
             Ok(())
         })
         .plugin(tauri_plugin_http::init())
