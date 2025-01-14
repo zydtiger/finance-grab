@@ -20,7 +20,7 @@ const App = () => {
     const initializeServer = async () => {
       try {
         const port = await invoke("start_python_server");
-        console.info("Server starting at:", +`${port}`);
+        console.info("Server started at:", +`${port}`);
         setServerPort(port as string);
       } catch (err) {
         setError(err as string);
@@ -60,6 +60,7 @@ const App = () => {
           height: "100vh",
           background: theme.colorBg,
           color: theme.colorText,
+          cursor: "wait",
         }}
       >
         <h1>Connecting to server...</h1>
