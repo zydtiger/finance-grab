@@ -72,7 +72,7 @@ const Downloader: React.FC<{ port: string }> = ({ port }) => {
   };
 
   return (
-    <div style={{ color: theme.colorText }}>
+    <div style={{ color: theme.colorText, width: "100%" }}>
       <Select
         style={{ marginBottom: 10 }}
         options={DownloaderTypes.map(type => ({
