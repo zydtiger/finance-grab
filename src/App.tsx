@@ -5,6 +5,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-shell";
 import { globalThemeContext } from "./theme";
 import Downloader from "./components/Downloader";
 import Flex from "./components/common/Flex/Flex";
@@ -69,16 +70,29 @@ const App = () => {
   }
 
   return (
-    <main
+    <Flex
+      vertical
+      gap={20}
+      align="center"
       style={{
         padding: 20,
         background: theme.colorBg,
+        color: theme.colorText,
         width: "100vw",
         height: "100vh",
       }}
     >
+      <h2>
+        Server started at:{" "}
+        <a
+          onClick={() => open(`http://localhost:${serverPort}/docs`)}
+          style={{ cursor: "pointer", textDecoration: "underline" }}
+        >
+          http://localhost:{serverPort}
+        </a>
+      </h2>
       <Downloader port={serverPort} />
-    </main>
+    </Flex>
   );
 };
 
