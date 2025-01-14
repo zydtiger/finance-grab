@@ -21,6 +21,7 @@ import Select from "./common/Select/Select";
 import Button from "./common/Button/Button";
 import createForm from "./common/Form/Form";
 import { FormHandle } from "./common/Form/types";
+import Modal from "./common/Modal/Modal";
 
 const Downloader: React.FC<{ port: string }> = ({ port }) => {
   const theme = useContext(globalThemeContext);
@@ -30,6 +31,7 @@ const Downloader: React.FC<{ port: string }> = ({ port }) => {
   const formRef = useRef<FormHandle<Record<string, string>>>(null);
   const [downloadFilename, setDownloadFilename] = useState<string>("file.csv");
   const [responseText, setResponseText] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchData = async () => {
     const formData = formRef.current?.getFormData();
@@ -48,6 +50,7 @@ const Downloader: React.FC<{ port: string }> = ({ port }) => {
     }
     setResponseText(await response.text());
     setDownloadFilename(`${formData["ticker"]}_${type}.csv`);
+    setIsModalOpen(true);
   };
 
   const saveToFile = async () => {
@@ -94,28 +97,16 @@ const Downloader: React.FC<{ port: string }> = ({ port }) => {
         >
           Fetch
         </Button>
-        {responseText && (
-          <>
-            <pre
-              style={{
-                width: "100%",
-                height: 300,
-                overflow: "scroll",
-              }}
-            >
-              {responseText}
-            </pre>
-            <Button
-              style={{
-                width: 120,
-                textAlign: "center",
-              }}
-              onClick={saveToFile}
-            >
-              Save to file
-            </Button>
-          </>
-        )}
+        <Modal
+          isOpen={isModalOpen}
+          buttons={["Save to file", "Cancel"]}
+          onClose={async button => {
+            if (button === 0) await saveToFile();
+            setIsModalOpen(false);
+          }}
+        >
+          <pre style={{ color: theme.colorText }}>{responseText}</pre>
+        </Modal>
       </Flex>
     </div>
   );
